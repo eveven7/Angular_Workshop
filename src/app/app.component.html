@@ -1,20 +1,21 @@
-<form>
+<form [formGroup]="postForm">
   <fieldset>
     <legend>Post</legend>
 
     <div>
       <label for="title">Title</label>
       <br>
-      <input type="text" name="title" id="title" value="">
+      <input type="text" formControlName="title" id="title">
     </div>
 
     <div>
       <label for="content">Content</label>
       <br>
-      <textarea name="content" id="content"></textarea>
+      <textarea formControlName="content" id="content"></textarea>
     </div>
   </fieldset>
 
   <button type="submit">Save</button>
   <button type="reset">Reset</button>
 </form>
+{{ postForm.value | json }}
