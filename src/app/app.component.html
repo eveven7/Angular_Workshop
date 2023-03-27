@@ -1,16 +1,22 @@
-<form [formGroup]="postForm" (ngSubmit)="onPostFormSubmit()" (reset)="onPostFormReset()">
+<form
+  [formGroup]="postForm"
+  (ngSubmit)="onPostFormSubmit()"
+  (reset)="onPostFormReset()"
+>
   <fieldset>
     <legend>Post</legend>
 
     <div>
       <label for="title">Title</label>
-      <br>
-      <input type="text" formControlName="title" id="title">
+      <br />
+      <input type="text" formControlName="title" id="title" />
     </div>
 
     <div>
-      <label for="content">Content</label>
-      <br>
+      <label for="content">
+        Content ({{ contentLengthRemaining$ | async }}/{{ contentMaxLength }})
+      </label>
+      <br />
       <textarea formControlName="content" id="content"></textarea>
     </div>
   </fieldset>
