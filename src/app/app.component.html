@@ -44,6 +44,9 @@
         <li *ngIf="content.errors['maxlength']">
           Content must be shorter than 50 characters
         </li>
+        <li *ngIf="content.errors['appropriateLanguage']">
+          Content must use appropriate language (no swear words).
+        </li>
       </ul>
     </div>
   </fieldset>

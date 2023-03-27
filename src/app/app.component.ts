@@ -13,6 +13,17 @@ const isNotJurgis: ValidatorFn = (control) => {
   return control.value === 'Jurgis' ? { isNotJurgis: true } : null;
 };
 
+const appropriateLanguage: ValidatorFn = (control) => {
+  const swearWords = ['react', 'vue', 'java'];
+  const value = control.value?.toLowerCase() || '';
+
+  if (swearWords.some((word) => value.includes(word))) {
+    return { appropriateLanguage: true };
+  }
+
+  return null;
+};
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -31,6 +42,7 @@ export class AppComponent implements OnInit, OnDestroy {
         Validators.required,
         Validators.minLength(10),
         Validators.maxLength(this.contentMaxLength),
+        appropriateLanguage,
       ],
     ],
   });
