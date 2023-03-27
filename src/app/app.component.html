@@ -1,4 +1,4 @@
-<form [formGroup]="postForm">
+<form [formGroup]="postForm" (ngSubmit)="onPostFormSubmit()" (reset)="onPostFormReset()">
   <fieldset>
     <legend>Post</legend>
 

@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder} from "@angular/forms";
+
+const fb = new FormBuilder();
 
 @Component({
   selector: 'app-root',
@@ -7,12 +9,17 @@ import {FormBuilder, FormGroup} from "@angular/forms";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  postForm: FormGroup;
+  postForm = fb.group({
+    title: [''],
+    content: ['']
+  });
 
-  constructor(private fb: FormBuilder) {
-    this.postForm = this.fb.group({
-      title: [''],
-      content: ['']
-    });
+  onPostFormSubmit() {
+    console.log(this.postForm.value)
+    this.postForm.reset();
+  }
+
+  onPostFormReset() {
+    this.postForm.reset();
   }
 }
