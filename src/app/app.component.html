@@ -7,15 +7,27 @@
     <legend>Post</legend>
 
     <div>
+      <label for="author">Author</label>
+      <br />
+      <input type="text" formControlName="author" id="author" />
+      <ul *ngIf="author.errors && author.touched">
+        <li *ngIf="author.errors['required']">Author is required</li>
+        <li *ngIf="author.errors['isNotJurgis']">
+          Author must not be 'Jurgis'
+        </li>
+      </ul>
+    </div>
+
+    <div>
       <label for="title">Title</label>
       <br />
       <input type="text" formControlName="title" id="title" />
-      <div *ngIf="title.errors && title.touched">
-        <div *ngIf="title.errors['required']">Title is required</div>
-        <div *ngIf="title.errors['minlength']">
+      <ul *ngIf="title.errors && title.touched">
+        <li *ngIf="title.errors['required']">Title is required</li>
+        <li *ngIf="title.errors['minlength']">
           Title must be at least 5 characters long
-        </div>
-      </div>
+        </li>
+      </ul>
     </div>
 
     <div>
@@ -24,15 +36,15 @@
       </label>
       <br />
       <textarea formControlName="content" id="content"></textarea>
-      <div *ngIf="content.errors && content.touched">
-        <div *ngIf="content.errors['required']">Content is required</div>
-        <div *ngIf="content.errors['minlength']">
+      <ul *ngIf="content.errors && content.touched">
+        <li *ngIf="content.errors['required']">Content is required</li>
+        <li *ngIf="content.errors['minlength']">
           Content must be at least 10 characters long
-        </div>
-        <div *ngIf="content.errors['maxlength']">
+        </li>
+        <li *ngIf="content.errors['maxlength']">
           Content must be shorter than 50 characters
-        </div>
-      </div>
+        </li>
+      </ul>
     </div>
   </fieldset>
 

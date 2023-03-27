@@ -1,8 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { map, Observable, startWith, Subject, takeUntil } from 'rxjs';
 
 const fb = new FormBuilder().nonNullable;
+
+const isNotJurgis: ValidatorFn = (control) => {
+  return control.value === 'Jurgis' ? { isNotJurgis: true } : null;
+};
 
 @Component({
   selector: 'app-root',
@@ -14,6 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public contentMaxLength = 50;
   public contentLengthRemaining$!: Observable<number>;
   postForm = fb.group({
+    author: ['', [Validators.required, isNotJurgis]],
     title: ['', [Validators.required, Validators.minLength(5)]],
     content: [
       '',
@@ -24,6 +34,10 @@ export class AppComponent implements OnInit, OnDestroy {
       ],
     ],
   });
+
+  get author() {
+    return this.postForm.get('author') as FormControl<string>;
+  }
 
   get title() {
     return this.postForm.get('title') as FormControl<string>;
