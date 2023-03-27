@@ -5,7 +5,18 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { map, Observable, startWith, Subject, takeUntil } from 'rxjs';
+import {
+  catchError,
+  EMPTY,
+  map,
+  Observable,
+  startWith,
+  Subject,
+  takeUntil,
+  tap,
+} from 'rxjs';
+import { PostsService } from './services/posts.service';
+import { Post } from './interfaces/post';
 
 const fb = new FormBuilder().nonNullable;
 
@@ -47,6 +58,8 @@ export class AppComponent implements OnInit, OnDestroy {
     ],
   });
 
+  constructor(private postsService: PostsService) {}
+
   get author() {
     return this.postForm.get('author') as FormControl<string>;
   }
@@ -77,8 +90,19 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onPostFormSubmit() {
     if (this.postForm.valid) {
-      console.log(this.postForm.value);
-      this.postForm.reset();
+      this.postsService
+        .addPost(this.postForm.value as Post)
+        .pipe(
+          tap(() => {
+            console.log('Post added: ', this.postForm.value);
+            this.postForm.reset();
+          }),
+          catchError((error) => {
+            console.log('Error adding post: ', error);
+            return EMPTY;
+          }),
+        )
+        .subscribe();
     }
   }
 
