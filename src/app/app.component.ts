@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { map, Observable, startWith, Subject, takeUntil } from 'rxjs';
 
-const fb = new FormBuilder();
+const fb = new FormBuilder().nonNullable;
 
 @Component({
   selector: 'app-root',
@@ -24,6 +24,14 @@ export class AppComponent implements OnInit, OnDestroy {
       ],
     ],
   });
+
+  get title() {
+    return this.postForm.get('title') as FormControl<string>;
+  }
+
+  get content() {
+    return this.postForm.get('content') as FormControl<string>;
+  }
 
   ngOnInit(): void {
     this.contentLengthRemaining$ = this.postForm
