@@ -1,7 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import {
+  AbstractControl,
+  AsyncValidatorFn,
   FormBuilder,
   FormControl,
+  ValidationErrors,
   ValidatorFn,
   Validators,
 } from '@angular/forms';
@@ -17,6 +20,7 @@ import {
 } from 'rxjs';
 import { PostsService } from './services/posts.service';
 import { Post } from './interfaces/post';
+import { ValidationService } from './services/validation.service';
 
 const fb = new FormBuilder().nonNullable;
 
@@ -44,21 +48,31 @@ export class AppComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   public contentMaxLength = 50;
   public contentLengthRemaining$!: Observable<number>;
-  postForm = fb.group({
-    author: ['', [Validators.required, isNotJurgis]],
-    title: ['', [Validators.required, Validators.minLength(5)]],
-    content: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(10),
-        Validators.maxLength(this.contentMaxLength),
-        appropriateLanguage,
+  postForm = fb.group(
+    {
+      author: ['', [Validators.required, isNotJurgis]],
+      title: [
+        '',
+        [Validators.required, Validators.minLength(5)],
+        [this.validationService.uniqueTitle],
       ],
-    ],
-  });
+      content: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(this.contentMaxLength),
+          appropriateLanguage,
+        ],
+      ],
+    },
+    { updateOn: 'blur' },
+  );
 
-  constructor(private postsService: PostsService) {}
+  constructor(
+    private postsService: PostsService,
+    private validationService: ValidationService,
+  ) {}
 
   get author() {
     return this.postForm.get('author') as FormControl<string>;
