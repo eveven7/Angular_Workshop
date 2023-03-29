@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
-import { PostsService } from '../services/posts.service';
+import { PostsService } from '../../services/posts.service';
 
 const fb = new FormBuilder().nonNullable;
 @Component({
@@ -15,7 +15,7 @@ export class FilterPostsComponent {
     ({
       title: ['']
     },
-      { updateOn: 'blur' })
+ { updateOn: 'blur' })
 
   constructor(
     private postsService: PostsService) { }

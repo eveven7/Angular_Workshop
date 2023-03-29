@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable, tap } from 'rxjs';
-import { Post } from '../interfaces/post';
-import { PostsService } from '../services/posts.service';
+import { Post } from '../../interfaces/post';
+import { PostsService } from '../../services/posts.service';
 
 @Component({
   selector: 'app-detailed-post',
@@ -18,7 +18,7 @@ export class DetailedPostComponent {
       const id = params.get("id");
       if (id != null) {
         this.post$ = this.postsService.getSinglePost(id)
-        .pipe(tap((post => console.log('post,', post))));
+          .pipe(tap((post => console.log('post,', post))));
       }
     });
   }
