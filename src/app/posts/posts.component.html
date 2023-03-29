@@ -1,0 +1,16 @@
+<h4> Filter posts by title</h4>
+<app-filter-posts (filterChange)="filterPosts($event)"></app-filter-posts>
+<fieldset>
+<legend></legend>
+
+
+<div *ngFor="let post of posts$ | async"
+routerLink="/posts/{{ post.id }}"
+
+>
+    <h3> Author </h3>{{ post.author}}
+    <h3> Title </h3>{{ post.title}}
+    <h3> Content </h3>{{ post.content}}
+
+</div>
+</fieldset>

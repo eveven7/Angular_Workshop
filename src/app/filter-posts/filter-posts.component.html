@@ -1,0 +1,16 @@
+<p>Filter by title</p>
+<form [formGroup]="titleForm" (ngSubmit)="onTitleFormSubmit()">
+
+    <fieldset>
+        <legend>Form</legend>
+        <div>
+            <label for="title">Title to filter by</label>
+            <div>
+                <input type="text" formControlName="title" id="title" />
+            </div>
+            <button type="submit">Search</button>
+        </div>
+    </fieldset>
+</form>
+
+{{ titleForm.value | json }}

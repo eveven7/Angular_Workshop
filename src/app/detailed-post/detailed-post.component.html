@@ -1,0 +1,17 @@
+<h4> Detailed post </h4>
+
+<fieldset>
+    <legend></legend>
+
+
+
+    <div *ngIf="post$ | async as post" routerLink="/posts/{{ post.id}}">
+
+
+
+        <h3> Author </h3>{{ post.author}}
+        <h3> Title </h3>{{ post.title}}
+        <h3> Content </h3>{{ post.content}}
+
+    </div>
+</fieldset>
