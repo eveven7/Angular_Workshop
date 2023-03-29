@@ -3,16 +3,14 @@
 
 <h4> Posts </h4>
 <fieldset>
-<legend></legend>
+    <legend></legend>
 
 
-<div *ngFor="let post of posts$ | async"
-routerLink="/posts/{{ post.id }}"
+    <div *ngFor="let post of posts$ | async" routerLink="/posts/{{ post.id }}">
+        <h3> Author </h3>{{ post.author}}
+        <h3> Title </h3>{{ post.title}}
+        <h3> Content </h3>{{ post.content}}
 
->
-    <h3> Author </h3>{{ post.author}}
-    <h3> Title </h3>{{ post.title}}
-    <h3> Content </h3>{{ post.content}}
-
-</div>
+    </div>
 </fieldset>
+<h3 *ngIf="(posts$| async )?.length == 0"> No posts found</h3>
